@@ -1,0 +1,66 @@
+def check(a,b,c,d):
+  if (a==0 or a>=b) and (c==0 or c>=d):
+    return 1
+  return 0
+
+def mc(l_m,l_c,r_m,r_c,boat_side):
+  visited.append([(l_m,l_c),(r_m,r_c),boat_side])
+  if r_m==3 and r_c==3:
+    return 1
+
+  if boat_side=='left':
+    if l_m>=1:
+      a,b,c,d=l_m-1,l_c,r_m+1,r_c
+      if [(a,b),(c,d),'right'] not in visited and check(a,b,c,d) and mc(a,b,c,d,'right'):
+        return 1
+    if l_c>=1:
+      a,b,c,d=l_m,l_c-1,r_m,r_c+1
+      if [(a,b),(c,d),'right'] not in visited and check(a,b,c,d) and mc(a,b,c,d,'right'):
+        return 1
+    if l_m>=1 and l_c>=1:
+      a,b,c,d=l_m-1,l_c-1,r_m+1,r_c+1
+      if [(a,b),(c,d),'right'] not in visited and check(a,b,c,d) and mc(a,b,c,d,'right'):
+        return 1
+    if l_m>=2:
+      a,b,c,d=l_m-2,l_c,r_m+2,r_c
+      if [(a,b),(c,d),'right'] not in visited and check(a,b,c,d) and mc(a,b,c,d,'right'):
+        return 1
+    if l_c>=2:
+      a,b,c,d=l_m,l_c-2,r_m,r_c+2
+      if [(a,b),(c,d),'right'] not in visited and check(a,b,c,d) and mc(a,b,c,d,'right'):
+        return 1
+
+  else:
+    if r_m>=1:
+      a,b,c,d=l_m+1,l_c,r_m-1,r_c
+      if [(a,b),(c,d),'left'] not in visited and check(a,b,c,d) and mc(a,b,c,d,'left'):
+        return 1
+    if r_c>=1:
+      a,b,c,d=l_m,l_c+1,r_m,r_c-1
+      if [(a,b),(c,d),'left'] not in visited and check(a,b,c,d) and mc(a,b,c,d,'left'):
+        return 1
+   
+    if r_m>=1 and r_c>=1:
+      a,b,c,d=l_m+1,l_c+1,r_m-1,r_c-1
+      if [(a,b),(c,d),'left'] not in visited and check(a,b,c,d) and mc(a,b,c,d,'left'):
+        return 1
+    if r_m>=2:
+      a,b,c,d=l_m+2,l_c,r_m-2,r_c
+      if [(a,b),(c,d),'left'] not in visited and check(a,b,c,d) and mc(a,b,c,d,'left'):
+        return 1
+    if r_c>=2:
+      a,b,c,d=l_m,l_c+2,r_m,r_c-2
+      if [(a,b),(c,d),'left'] not in visited and check(a,b,c,d) and mc(a,b,c,d,'left'):
+        return 1
+  return 0
+
+
+l_m,l_c,r_m,r_c=3,3,0,0
+visited=[]
+
+if mc(l_m,l_c,r_m,r_c,'left'):
+  print('States traversed:')
+  print(visited)
+else:
+  print('No solution')
+
