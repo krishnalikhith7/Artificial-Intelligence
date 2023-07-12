@@ -1,0 +1,36 @@
+room1,room2,vacuum_location=input('Enter initial state of vacuum problem: ').split()
+visited=[[room1,room2,vacuum_location]]
+print('BFS Traversal of states:')
+front,top=0,0
+f=0
+
+def add(p,q,r):
+  global top
+  visited.append([p,q,r])
+  top+=1
+
+while front<=top:
+  room1,room2,vacuum_location=visited[front]
+
+  if room1=='clean' and room2=='clean':
+    f=1
+    break
+
+  if vacuum_location=='left':
+    if room1=='dirt' and ['clean',room2,vacuum_location] not in visited:
+      add('clean',room2,vacuum_location)
+    if [room1,room2,'right'] not in visited:
+      add(room1,room2,'right')
+
+  else:
+    if room2=='dirt' and [room1,'clean',vacuum_location] not in visited:
+      add(room1,'clean',vacuum_location)
+    if [room1,room2,'left'] not in visited:
+      add(room1,room2,'left')
+
+  front+=1
+
+if f==1:
+  print(visited[:front+1])
+else:
+  print('No solution')
