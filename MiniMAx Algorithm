@@ -1,0 +1,23 @@
+import math
+
+def minimax (curDepth, nodeIndex, maxTurn):
+
+	# base case : targetDepth reached
+	if (curDepth == treeDepth):
+		return scores[nodeIndex]
+
+	if (maxTurn):
+		return max(minimax(curDepth + 1, nodeIndex * 2, False), minimax(curDepth + 1, nodeIndex * 2 + 1, False))
+
+	else:
+		return min(minimax(curDepth + 1, nodeIndex * 2, True), minimax(curDepth + 1, nodeIndex * 2 + 1, True))
+
+# Driver code
+# scores = [3, 5, 2, 9, 12, 5, 23, 23]
+scores= list(map(int,input('Enter utility scores: ').split()))
+k=int(input('Enter initial turn, 1 for max or 0 for min: '))
+treeDepth = math.log(len(scores), 2)
+
+print("The optimal value is : ", end = "")
+
+print(minimax(0, 0, k))
