@@ -1,0 +1,72 @@
+visited=[[(3,3),(0,0),'left']]
+front,top=0,0
+f=0
+
+def check(a,b,c,d):
+  if (a==0 or a>=b) and (c==0 or c>=d):
+    return 1
+  return 0
+
+def add(p,q,r):
+  global top
+  visited.append([p,q,r])
+  top+=1
+
+while front<=top:
+  (l_m,l_c),(r_m,r_c),boat_side=visited[front]
+  if r_m==3 and r_c==3:
+    f=1
+    break
+
+  if boat_side=='left':
+    if l_m>=1:
+      a,b,c,d=l_m-1,l_c,r_m+1,r_c
+      if [(a,b),(c,d),'right'] not in visited and check(a,b,c,d):
+        add((a,b),(c,d),'right')
+    if l_c>=1:
+      a,b,c,d=l_m,l_c-1,r_m,r_c+1
+      if [(a,b),(c,d),'right'] not in visited and check(a,b,c,d):
+        add((a,b),(c,d),'right')
+    if l_m>=1 and l_c>=1:
+      a,b,c,d=l_m-1,l_c-1,r_m+1,r_c+1
+      if [(a,b),(c,d),'right'] not in visited and check(a,b,c,d):
+        add((a,b),(c,d),'right')
+    if l_m>=2:
+      a,b,c,d=l_m-2,l_c,r_m+2,r_c
+      if [(a,b),(c,d),'right'] not in visited and check(a,b,c,d):
+        add((a,b),(c,d),'right')
+    if l_c>=2:
+      a,b,c,d=l_m,l_c-2,r_m,r_c+2
+      if [(a,b),(c,d),'right'] not in visited and check(a,b,c,d):
+        add((a,b),(c,d),'right')
+
+  else:
+    if r_m>=1:
+      a,b,c,d=l_m+1,l_c,r_m-1,r_c
+      if [(a,b),(c,d),'left'] not in visited and check(a,b,c,d):
+        add((a,b),(c,d),'left')
+    if r_c>=1:
+      a,b,c,d=l_m,l_c+1,r_m,r_c-1
+      if [(a,b),(c,d),'left'] not in visited and check(a,b,c,d):
+        add((a,b),(c,d),'left')
+    if r_m>=1 and r_c>=1:
+      a,b,c,d=l_m+1,l_c+1,r_m-1,r_c-1
+      if [(a,b),(c,d),'left'] not in visited and check(a,b,c,d):
+        add((a,b),(c,d),'left')
+    if r_m>=2:
+      a,b,c,d=l_m+2,l_c,r_m-2,r_c
+      if [(a,b),(c,d),'left'] not in visited and check(a,b,c,d):
+        add((a,b),(c,d),'left')
+    if r_c>=2:
+      a,b,c,d=l_m,l_c+2,r_m,r_c-2
+      if [(a,b),(c,d),'left'] not in visited and check(a,b,c,d):
+        add((a,b),(c,d),'left')
+
+  front+=1
+
+if f==1:
+    visited=visited[:front+1]
+    print('States traversed:')
+    print(visited)
+else:
+    print('No solution')
