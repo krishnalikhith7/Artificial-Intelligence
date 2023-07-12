@@ -1,0 +1,33 @@
+g=eval(input('Enter graph: '))
+s=int(input('Enter source: '))
+t=int(input('Enter target: '))
+depth=int(input('Enter depth: '))
+
+def DFS(d):
+    visited=[s]
+    stack=[s]
+    check=[0]
+    while stack:
+        f=stack.pop()
+        print(f,end=' ')
+        p=check.pop()
+        if f==t:
+          print(' Target found within given depth')
+          return 1
+        if p+1>d:
+          continue
+        for neighbor in g[f]:
+            if neighbor not in visited:
+                check.append(p+1)
+                visited.append(neighbor)
+                stack.append(neighbor)
+    return 0
+
+def IDDFS():
+  for i in range(depth+1):
+    print('Depth',i,': ',end='')
+    if DFS(i):
+      break
+    print()
+
+IDDFS()
