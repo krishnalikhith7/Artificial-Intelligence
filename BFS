@@ -1,0 +1,18 @@
+def bfs(graph,node):
+    visited=[]
+    queue=[]
+    visited.append(node)
+    queue.append(node)
+
+    while queue:
+        t=queue.pop(0)
+        print(t, end=" ")
+
+        for neighbor in graph[t]:
+            if neighbor not in visited:
+                visited.append(neighbor)
+                queue.append(neighbor)
+
+graph=eval(input('Enter graph: '))
+s=int(input('Enter source: '))
+bfs(graph,s)
