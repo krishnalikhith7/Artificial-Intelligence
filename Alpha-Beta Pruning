@@ -1,0 +1,39 @@
+import math
+def minimax(depth, nodeIndex, maximizingPlayer,
+			values, alpha, beta):
+	if depth == treeDepth:
+		return values[nodeIndex]
+
+	if maximizingPlayer:
+
+		best = -math.inf
+		for i in range(0, 2):
+
+			val = minimax(depth + 1, nodeIndex * 2 + i,
+						False, values, alpha, beta)
+			best = max(best, val)
+			alpha = max(alpha, best)
+
+			# Alpha Beta Pruning
+			if beta <= alpha:
+				break
+		return best
+	else:
+		best = math.inf
+		for i in range(0, 2):
+
+			val = minimax(depth + 1, nodeIndex * 2 + i,
+							True, values, alpha, beta)
+			best = min(best, val)
+			beta = min(beta, best)
+
+			# Alpha Beta Pruning
+			if beta <= alpha:
+				break
+
+		return best
+
+scores= list(map(int,input('Enter utility scores: ').split()))
+k=int(input('Enter initial turn, 1 for max or 0 for min: '))
+treeDepth = math.log(len(scores), 2)
+print("The optimal value is :", minimax(0, 0, k, scores, -math.inf, math.inf))
