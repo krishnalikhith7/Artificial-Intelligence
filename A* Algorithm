@@ -1,0 +1,70 @@
+from collections import defaultdict
+
+hn=eval(input('Enter heuristic costs: '))
+edges=eval(input('Enter edges with costs: '))
+
+graph=defaultdict(list)
+c=defaultdict(list)
+for i in edges:
+  graph[i[0]].append(i[1])
+  c[i[0]].append(i[2])
+  graph[i[1]].append(i[0])
+  c[i[1]].append(i[2])
+
+src=input('Enter source: ')
+dest=input('Enter destination: ')
+
+p1,p2,p3=[],[],[]
+q1,q2,q3=[],[],[]
+k=src
+cost=0
+minc=[]
+f=0
+
+def append(s,t,u,v,k,i):
+  s.append(v)
+  t.append(k)
+  u.append(i)
+
+def remove(s,t,u,v,k,i):
+  s.remove(v)
+  t.remove(k)
+  u.remove(i)
+
+while 1:
+  u=0
+  if f==0 and k==dest:
+    break
+  if k!=dest:
+    for i in graph[k]:
+      v=cost+c[k][u]+hn[i]
+      if i not in p3 and i not in q3:
+        append(p1,p2,p3,v,k,i)
+      
+    elif i in p3:
+        g=p3.index(i)
+        if v<p1[g]:
+          append(p1,p2,p3,v,k,i)
+          remove(p1,p2,p3,p1[g],p2[g],p3[g])
+      elif i in q3:
+        g=q3.index(i)
+        if v<q1[g]:
+          append(p1,p2,p3,v,k,i)
+      u+=1
+  if len(p1)==0:
+    break
+  j=min(p1)
+  g=p1.index(j)
+  if p3[g]==dest:
+    minc.append(j)
+  k=p3[g]
+  cost=j-hn[p3[g]]
+  print([p2[g],p3[g],p1[g]])
+  append(q1,q2,q3,p1[g],p2[g],p3[g])
+  remove(p1,p2,p3,p1[g],p2[g],p3[g])
+  f=1
+
+if len(minc)!=0:
+  print('Minimum cost to reach destination: ',min(minc))
+elif f==1:
+  print('Destination cannot be reached')
