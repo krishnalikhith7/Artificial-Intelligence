@@ -1,0 +1,35 @@
+g=eval(input('Enter graph: '))
+c=eval(input('Enter costs: '))
+s=input('Enter source: ')
+d=input('Enter destination: ')
+
+q=s
+l=[]
+cost=0
+minc=[]
+
+def add():
+  k=0
+  if q not in g:
+    return
+  for i in g[q]:
+    l.append([cost+c[q][k],q,i])
+    if i==d:
+      minc.append(cost+c[q][k])
+    k+=1
+
+if q!=d:
+  add()
+
+while l:
+  j=min(l)
+  print(j)
+  q=j[2]
+  cost=j[0]
+  l.remove(j)
+
+  if q!=d:
+    add()
+
+print('Minimum cost =',min(minc))
+
