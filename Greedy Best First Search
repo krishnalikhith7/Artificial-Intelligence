@@ -1,0 +1,38 @@
+from collections import defaultdict
+
+nodes=eval(input('Enter nodes with coordinates: '))
+edges=eval(input('Enter edges: '))
+graph=defaultdict(list)
+for i in edges:
+  graph[i[0]].append(i[1])
+  graph[i[1]].append(i[0])
+
+src=input('Enter source: ')
+dest=input('Enter destination: ')
+
+hc={} #heuristic
+for i in nodes.keys():
+  hc[i]=abs(nodes[i][0]-nodes[dest][0])+abs(nodes[i][1]-nodes[dest][1])  #Manhattan
+
+l=[]
+s=[]
+k=src
+f=0
+
+while 1:
+  s.append(k)
+  if k==dest:
+    f=1
+    break
+  for i in graph[k]:
+    if i not in s:
+      l.append([hc[i],k,i])
+  if len(l)==0:
+    break
+  m=min(l)
+  print(m)
+  k=m[2]
+  l.remove(m)
+
+if f==0:
+  print('No path found to destination')
